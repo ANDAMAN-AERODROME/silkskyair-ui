@@ -6,18 +6,20 @@
   "private": false,
   "packageManager": "pnpm@10.28.2",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
-    "dist/"
+    "dist/",
+    "src/"
   ],
   "scripts": {
     "build": "tsup",
@@ -31,8 +33,7 @@
   "peerDependencies": {
     "lucide-react": ">=0.400",
     "react": ">=18",
-    "react-dom": ">=18",
-    "tailwindcss": ">=4"
+    "react-dom": ">=18"
   },
   "peerDependenciesMeta": {
     "lucide-react": {
