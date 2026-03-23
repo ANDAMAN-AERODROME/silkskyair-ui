@@ -1,0 +1,68 @@
+/*
+ * SilkSky Air Design System
+ * ─────────────────────────
+ * Core theme tokens for the SSA universe.
+ * Import this file in your app's globals.css before @theme inline.
+ *
+ * Usage: @import "@andaman-aerodrome/ui/styles/theme.css";
+ */
+
+:root {
+  /* ── Colors ── */
+  --ssa-background: #ffffff;
+  --ssa-foreground: #0f172a;        /* slate-900 */
+  --ssa-foreground-muted: #64748b;  /* slate-500 */
+  --ssa-foreground-subtle: #94a3b8; /* slate-400 */
+  --ssa-primary: #032b5b;           /* brand navy */
+  --ssa-primary-light: #0a4a8a;
+
+  /* ── Borders ── */
+  --ssa-border: #e2e8f0;            /* slate-200 */
+  --ssa-border-hover: #cbd5e1;      /* slate-300 */
+  --ssa-border-focus: var(--ssa-primary);
+  --ssa-ring-focus: rgba(3, 43, 91, 0.2);
+
+  /* ── Surfaces ── */
+  --ssa-surface: #ffffff;
+  --ssa-surface-muted: #f8fafc;     /* slate-50 */
+  --ssa-surface-hover: #f1f5f9;     /* slate-100 */
+  --ssa-surface-active: rgba(3, 43, 91, 0.05);
+
+  /* ── Feedback ── */
+  --ssa-success: #059669;           /* emerald-600 */
+  --ssa-success-light: #ecfdf5;     /* emerald-50 */
+  --ssa-warning: #d97706;           /* amber-600 */
+  --ssa-warning-light: #fffbeb;     /* amber-50 */
+  --ssa-error: #dc2626;             /* red-600 */
+  --ssa-error-light: #fef2f2;       /* red-50 */
+
+  /* ── Radius ── */
+  --ssa-radius-sm: 8px;
+  --ssa-radius-base: 10px;
+  --ssa-radius-lg: 12px;
+  --ssa-radius-xl: 16px;
+  --ssa-radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --ssa-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ssa-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --ssa-shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ssa-background: #0a0a0a;
+    --ssa-foreground: #e2e8f0;
+    --ssa-foreground-muted: #94a3b8;
+    --ssa-foreground-subtle: #64748b;
+    --ssa-primary: #3b82f6;
+    --ssa-primary-light: #60a5fa;
+
+    --ssa-border: #1e293b;
+    --ssa-border-hover: #334155;
+
+    --ssa-surface: #0f172a;
+    --ssa-surface-muted: #1e293b;
+    --ssa-surface-hover: #334155;
+  }
+}
