@@ -1643,26 +1643,28 @@ function LocationMap({
 
 // src/components/rich-text-content.tsx
 import { Fragment as Fragment5, jsx as jsx18, jsxs as jsxs14 } from "react/jsx-runtime";
-function wrapMarks(text, marks) {
+function wrapMarks(text, marks, nodeKey) {
   var _a, _b;
   if (!marks || marks.length === 0) return text;
   let node = text;
-  for (const mark of marks) {
+  for (let i = 0; i < marks.length; i++) {
+    const mark = marks[i];
+    const key = `${nodeKey != null ? nodeKey : "m"}-${mark.type}-${i}`;
     switch (mark.type) {
       case "bold":
-        node = /* @__PURE__ */ jsx18("strong", { children: node });
+        node = /* @__PURE__ */ jsx18("strong", { children: node }, key);
         break;
       case "italic":
-        node = /* @__PURE__ */ jsx18("em", { children: node });
+        node = /* @__PURE__ */ jsx18("em", { children: node }, key);
         break;
       case "underline":
-        node = /* @__PURE__ */ jsx18("u", { children: node });
+        node = /* @__PURE__ */ jsx18("u", { children: node }, key);
         break;
       case "strike":
-        node = /* @__PURE__ */ jsx18("s", { children: node });
+        node = /* @__PURE__ */ jsx18("s", { children: node }, key);
         break;
       case "code":
-        node = /* @__PURE__ */ jsx18("code", { className: "rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-slate-800", children: node });
+        node = /* @__PURE__ */ jsx18("code", { className: "rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-slate-800", children: node }, key);
         break;
       case "link": {
         const href = (_b = (_a = mark.attrs) == null ? void 0 : _a.href) != null ? _b : "#";
@@ -1674,7 +1676,8 @@ function wrapMarks(text, marks) {
             rel: "noopener noreferrer",
             className: "text-primary underline decoration-primary/30 transition hover:decoration-primary",
             children: node
-          }
+          },
+          key
         );
         break;
       }
@@ -1706,7 +1709,7 @@ function renderNode(node, index) {
       return /* @__PURE__ */ jsx18("h3", { className: cls, children }, key);
     }
     case "text":
-      return wrapMarks((_e = node.text) != null ? _e : "", node.marks);
+      return /* @__PURE__ */ jsx18("span", { children: wrapMarks((_e = node.text) != null ? _e : "", node.marks, key) }, key);
     case "hardBreak":
       return /* @__PURE__ */ jsx18("br", {}, key);
     case "horizontalRule":
