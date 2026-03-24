@@ -334,6 +334,37 @@ type LocationMapProps = {
 };
 declare function LocationMap({ latitude, longitude, label, zoom, apiKey, width, height, directionsLabel, directionsUrl, locale, className, }: LocationMapProps): react_jsx_runtime.JSX.Element;
 
+interface Mark {
+    type: string;
+    attrs?: Record<string, unknown>;
+}
+interface TipTapNode {
+    type: string;
+    content?: TipTapNode[];
+    text?: string;
+    marks?: Mark[];
+    attrs?: Record<string, unknown>;
+}
+interface RichTextContentProps {
+    /** TipTap/Novel JSON — accepts a JSON string or a pre-parsed object */
+    content: string | TipTapNode | null | undefined;
+    /** Additional CSS class names for the wrapper */
+    className?: string;
+    /** Fallback text when content is empty / null */
+    fallback?: string;
+}
+/**
+ * Renders TipTap/Novel rich-text JSON as styled React elements.
+ *
+ * Zero external dependencies — pure React + Tailwind.
+ *
+ * @example
+ * ```tsx
+ * <RichTextContent content={tour.description_long} className="text-sm text-slate-600" />
+ * ```
+ */
+declare function RichTextContent({ content, className, fallback }: RichTextContentProps): react_jsx_runtime.JSX.Element | null;
+
 type Point = {
     x: number;
     y: number;
@@ -342,4 +373,4 @@ declare function applyPerspectiveWarp(source: ImageBitmap, corners: [Point, Poin
 
 declare function useEscapeClose(enabled: boolean, onClose: () => void): void;
 
-export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, SearchableSelector, type SearchableSelectorProps, type SelectOption, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useEscapeClose, useToast };
+export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, RichTextContent, type RichTextContentProps, SearchableSelector, type SearchableSelectorProps, type SelectOption, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useEscapeClose, useToast };

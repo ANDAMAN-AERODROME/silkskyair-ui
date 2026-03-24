@@ -1640,6 +1640,163 @@ function LocationMap({
     }
   );
 }
+
+// src/components/rich-text-content.tsx
+import { Fragment as Fragment5, jsx as jsx18, jsxs as jsxs14 } from "react/jsx-runtime";
+function wrapMarks(text, marks) {
+  var _a, _b;
+  if (!marks || marks.length === 0) return text;
+  let node = text;
+  for (const mark of marks) {
+    switch (mark.type) {
+      case "bold":
+        node = /* @__PURE__ */ jsx18("strong", { children: node });
+        break;
+      case "italic":
+        node = /* @__PURE__ */ jsx18("em", { children: node });
+        break;
+      case "underline":
+        node = /* @__PURE__ */ jsx18("u", { children: node });
+        break;
+      case "strike":
+        node = /* @__PURE__ */ jsx18("s", { children: node });
+        break;
+      case "code":
+        node = /* @__PURE__ */ jsx18("code", { className: "rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-slate-800", children: node });
+        break;
+      case "link": {
+        const href = (_b = (_a = mark.attrs) == null ? void 0 : _a.href) != null ? _b : "#";
+        node = /* @__PURE__ */ jsx18(
+          "a",
+          {
+            href,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "text-primary underline decoration-primary/30 transition hover:decoration-primary",
+            children: node
+          }
+        );
+        break;
+      }
+      default:
+        break;
+    }
+  }
+  return node;
+}
+function renderNode(node, index) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+  const key = `${node.type}-${index}`;
+  const children = (_a = node.content) == null ? void 0 : _a.map((child, i) => renderNode(child, i));
+  switch (node.type) {
+    case "doc":
+      return /* @__PURE__ */ jsx18(Fragment5, { children });
+    case "paragraph":
+      return /* @__PURE__ */ jsx18("p", { className: "mb-3 last:mb-0", children: children != null ? children : /* @__PURE__ */ jsx18("br", {}) }, key);
+    case "heading": {
+      const level = (_c = (_b = node.attrs) == null ? void 0 : _b.level) != null ? _c : 2;
+      const sizes = {
+        1: "text-xl font-bold mb-3",
+        2: "text-lg font-semibold mb-2",
+        3: "text-base font-semibold mb-2"
+      };
+      const cls = (_d = sizes[level]) != null ? _d : sizes[3];
+      if (level === 1) return /* @__PURE__ */ jsx18("h1", { className: cls, children }, key);
+      if (level === 2) return /* @__PURE__ */ jsx18("h2", { className: cls, children }, key);
+      return /* @__PURE__ */ jsx18("h3", { className: cls, children }, key);
+    }
+    case "text":
+      return wrapMarks((_e = node.text) != null ? _e : "", node.marks);
+    case "hardBreak":
+      return /* @__PURE__ */ jsx18("br", {}, key);
+    case "horizontalRule":
+      return /* @__PURE__ */ jsx18("hr", { className: "my-4 border-slate-200" }, key);
+    case "blockquote":
+      return /* @__PURE__ */ jsx18(
+        "blockquote",
+        {
+          className: "mb-3 border-l-4 border-slate-300 pl-4 italic text-slate-600",
+          children
+        },
+        key
+      );
+    case "codeBlock":
+      return /* @__PURE__ */ jsx18(
+        "pre",
+        {
+          className: "mb-3 overflow-x-auto rounded-lg bg-slate-100 p-4 font-mono text-sm text-slate-800",
+          children: /* @__PURE__ */ jsx18("code", { children })
+        },
+        key
+      );
+    case "bulletList":
+      return /* @__PURE__ */ jsx18("ul", { className: "mb-3 list-disc space-y-1 pl-5", children }, key);
+    case "orderedList":
+      return /* @__PURE__ */ jsx18("ol", { className: "mb-3 list-decimal space-y-1 pl-5", children }, key);
+    case "listItem":
+      return /* @__PURE__ */ jsx18("li", { children }, key);
+    case "taskList":
+      return /* @__PURE__ */ jsx18("ul", { className: "mb-3 space-y-1", children }, key);
+    case "taskItem": {
+      const checked = ((_f = node.attrs) == null ? void 0 : _f.checked) === true;
+      return /* @__PURE__ */ jsxs14("li", { className: "flex items-start gap-2", children: [
+        /* @__PURE__ */ jsx18("span", { className: `mt-0.5 ${checked ? "text-emerald-500" : "text-slate-400"}`, children: checked ? "\u2611" : "\u2610" }),
+        /* @__PURE__ */ jsx18("span", { className: checked ? "line-through text-slate-400" : "", children })
+      ] }, key);
+    }
+    case "image": {
+      const src = (_h = (_g = node.attrs) == null ? void 0 : _g.src) != null ? _h : "";
+      const alt = (_j = (_i = node.attrs) == null ? void 0 : _i.alt) != null ? _j : "";
+      return /* @__PURE__ */ jsx18(
+        "img",
+        {
+          src,
+          alt,
+          className: "mb-3 max-w-full rounded-lg",
+          loading: "lazy"
+        },
+        key
+      );
+    }
+    case "table":
+      return /* @__PURE__ */ jsx18("div", { className: "mb-3 overflow-x-auto", children: /* @__PURE__ */ jsx18("table", { className: "w-full border-collapse border border-slate-200 text-sm", children: /* @__PURE__ */ jsx18("tbody", { children }) }) }, key);
+    case "tableRow":
+      return /* @__PURE__ */ jsx18("tr", { children }, key);
+    case "tableHeader":
+      return /* @__PURE__ */ jsx18(
+        "th",
+        {
+          className: "border border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold",
+          children
+        },
+        key
+      );
+    case "tableCell":
+      return /* @__PURE__ */ jsx18("td", { className: "border border-slate-200 px-3 py-2", children }, key);
+    default:
+      return children ? /* @__PURE__ */ jsx18("span", { children }, key) : null;
+  }
+}
+function RichTextContent({ content, className, fallback }) {
+  if (!content) {
+    return fallback ? /* @__PURE__ */ jsx18("p", { className, children: fallback }) : null;
+  }
+  let parsed;
+  if (typeof content === "string") {
+    try {
+      const json = JSON.parse(content);
+      if (!json || typeof json !== "object" || json.type !== "doc") {
+        return /* @__PURE__ */ jsx18("p", { className, children: content });
+      }
+      parsed = json;
+    } catch (e) {
+      return /* @__PURE__ */ jsx18("p", { className, children: content });
+    }
+  } else {
+    parsed = content;
+  }
+  return /* @__PURE__ */ jsx18("div", { className, children: renderNode(parsed, 0) });
+}
 export {
   ContactTitleSelect,
   EmailInput,
@@ -1649,6 +1806,7 @@ export {
   PassportImageEditor,
   PaxCounter,
   PillSelector,
+  RichTextContent,
   SearchableSelector,
   Selector,
   SideDrawer,

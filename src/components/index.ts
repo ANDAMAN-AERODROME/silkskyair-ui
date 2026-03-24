@@ -47,3 +47,6 @@ export type { PaxCounterProps } from './pax-counter'
 
 export { LocationMap } from './location-map'
 export type { LocationMapProps } from './location-map'
+
+export { RichTextContent } from './rich-text-content'
+export type { RichTextContentProps } from './rich-text-content'

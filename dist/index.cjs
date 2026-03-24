@@ -42,6 +42,7 @@ __export(index_exports, {
   PassportImageEditor: () => PassportImageEditor,
   PaxCounter: () => PaxCounter,
   PillSelector: () => PillSelector,
+  RichTextContent: () => RichTextContent,
   SearchableSelector: () => SearchableSelector,
   Selector: () => Selector,
   SideDrawer: () => SideDrawer,
@@ -1681,6 +1682,163 @@ function LocationMap({
     }
   );
 }
+
+// src/components/rich-text-content.tsx
+var import_jsx_runtime18 = require("react/jsx-runtime");
+function wrapMarks(text, marks) {
+  var _a, _b;
+  if (!marks || marks.length === 0) return text;
+  let node = text;
+  for (const mark of marks) {
+    switch (mark.type) {
+      case "bold":
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("strong", { children: node });
+        break;
+      case "italic":
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("em", { children: node });
+        break;
+      case "underline":
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("u", { children: node });
+        break;
+      case "strike":
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("s", { children: node });
+        break;
+      case "code":
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("code", { className: "rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-slate-800", children: node });
+        break;
+      case "link": {
+        const href = (_b = (_a = mark.attrs) == null ? void 0 : _a.href) != null ? _b : "#";
+        node = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          "a",
+          {
+            href,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "text-primary underline decoration-primary/30 transition hover:decoration-primary",
+            children: node
+          }
+        );
+        break;
+      }
+      default:
+        break;
+    }
+  }
+  return node;
+}
+function renderNode(node, index) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+  const key = `${node.type}-${index}`;
+  const children = (_a = node.content) == null ? void 0 : _a.map((child, i) => renderNode(child, i));
+  switch (node.type) {
+    case "doc":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children });
+    case "paragraph":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "mb-3 last:mb-0", children: children != null ? children : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("br", {}) }, key);
+    case "heading": {
+      const level = (_c = (_b = node.attrs) == null ? void 0 : _b.level) != null ? _c : 2;
+      const sizes = {
+        1: "text-xl font-bold mb-3",
+        2: "text-lg font-semibold mb-2",
+        3: "text-base font-semibold mb-2"
+      };
+      const cls = (_d = sizes[level]) != null ? _d : sizes[3];
+      if (level === 1) return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h1", { className: cls, children }, key);
+      if (level === 2) return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: cls, children }, key);
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: cls, children }, key);
+    }
+    case "text":
+      return wrapMarks((_e = node.text) != null ? _e : "", node.marks);
+    case "hardBreak":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("br", {}, key);
+    case "horizontalRule":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("hr", { className: "my-4 border-slate-200" }, key);
+    case "blockquote":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        "blockquote",
+        {
+          className: "mb-3 border-l-4 border-slate-300 pl-4 italic text-slate-600",
+          children
+        },
+        key
+      );
+    case "codeBlock":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        "pre",
+        {
+          className: "mb-3 overflow-x-auto rounded-lg bg-slate-100 p-4 font-mono text-sm text-slate-800",
+          children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("code", { children })
+        },
+        key
+      );
+    case "bulletList":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("ul", { className: "mb-3 list-disc space-y-1 pl-5", children }, key);
+    case "orderedList":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("ol", { className: "mb-3 list-decimal space-y-1 pl-5", children }, key);
+    case "listItem":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("li", { children }, key);
+    case "taskList":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("ul", { className: "mb-3 space-y-1", children }, key);
+    case "taskItem": {
+      const checked = ((_f = node.attrs) == null ? void 0 : _f.checked) === true;
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { className: "flex items-start gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: `mt-0.5 ${checked ? "text-emerald-500" : "text-slate-400"}`, children: checked ? "\u2611" : "\u2610" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: checked ? "line-through text-slate-400" : "", children })
+      ] }, key);
+    }
+    case "image": {
+      const src = (_h = (_g = node.attrs) == null ? void 0 : _g.src) != null ? _h : "";
+      const alt = (_j = (_i = node.attrs) == null ? void 0 : _i.alt) != null ? _j : "";
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        "img",
+        {
+          src,
+          alt,
+          className: "mb-3 max-w-full rounded-lg",
+          loading: "lazy"
+        },
+        key
+      );
+    }
+    case "table":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "mb-3 overflow-x-auto", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("table", { className: "w-full border-collapse border border-slate-200 text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("tbody", { children }) }) }, key);
+    case "tableRow":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("tr", { children }, key);
+    case "tableHeader":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        "th",
+        {
+          className: "border border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold",
+          children
+        },
+        key
+      );
+    case "tableCell":
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("td", { className: "border border-slate-200 px-3 py-2", children }, key);
+    default:
+      return children ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children }, key) : null;
+  }
+}
+function RichTextContent({ content, className, fallback }) {
+  if (!content) {
+    return fallback ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className, children: fallback }) : null;
+  }
+  let parsed;
+  if (typeof content === "string") {
+    try {
+      const json = JSON.parse(content);
+      if (!json || typeof json !== "object" || json.type !== "doc") {
+        return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className, children: content });
+      }
+      parsed = json;
+    } catch (e) {
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className, children: content });
+    }
+  } else {
+    parsed = content;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className, children: renderNode(parsed, 0) });
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ContactTitleSelect,
@@ -1691,6 +1849,7 @@ function LocationMap({
   PassportImageEditor,
   PaxCounter,
   PillSelector,
+  RichTextContent,
   SearchableSelector,
   Selector,
   SideDrawer,
