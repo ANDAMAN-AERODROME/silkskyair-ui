@@ -1,6 +1,6 @@
 {
   "name": "@andaman-aerodrome/ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Shared React UI components on Tailwind + Lucide",
   "license": "UNLICENSED",
   "private": false,
