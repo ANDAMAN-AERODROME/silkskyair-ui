@@ -18,6 +18,8 @@ export type { SearchableSelectorProps } from './selector'
 
 export type { SelectOption } from './selector'
 
+export { SelectTrigger, SelectDropdown, SelectOptionRow, useDropdown } from './selector/select-primitives'
+
 export { ContactTitleSelect } from './contact-title-select'
 export type { ContactTitleSelectProps } from './contact-title-select'
 

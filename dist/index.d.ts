@@ -130,6 +130,35 @@ type SelectOption<T extends string = string> = {
     icon?: ReactNode;
     disabled?: boolean;
 };
+type TriggerProps = {
+    onClick: () => void;
+    onClear?: () => void;
+    disabled?: boolean;
+    error?: boolean;
+    isOpen: boolean;
+    children: ReactNode;
+    showClear?: boolean;
+};
+declare function SelectTrigger({ onClick, onClear, disabled, error, isOpen, children, showClear, }: TriggerProps): react_jsx_runtime.JSX.Element;
+type DropdownProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    children: ReactNode;
+};
+declare function SelectDropdown({ isOpen, onClose, children }: DropdownProps): react_jsx_runtime.JSX.Element | null;
+type OptionRowProps<T extends string = string> = {
+    option: SelectOption<T>;
+    isSelected: boolean;
+    onClick: () => void;
+    renderOption?: (option: SelectOption<T>) => ReactNode;
+};
+declare function SelectOptionRow<T extends string = string>({ option, isSelected, onClick, renderOption, }: OptionRowProps<T>): react_jsx_runtime.JSX.Element;
+declare function useDropdown(): {
+    isOpen: boolean;
+    open: () => void;
+    close: () => void;
+    toggle: () => void;
+};
 
 type SelectorProps<T extends string = string> = {
     options: SelectOption<T>[];
@@ -396,4 +425,4 @@ declare function applyPerspectiveWarp(source: ImageBitmap, corners: [Point, Poin
 
 declare function useEscapeClose(enabled: boolean, onClose: () => void): void;
 
-export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, PromptDialog, type PromptDialogProps, RichTextContent, type RichTextContentProps, SearchableSelector, type SearchableSelectorProps, type SelectOption, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useEscapeClose, useToast };
+export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, PromptDialog, type PromptDialogProps, RichTextContent, type RichTextContentProps, SearchableSelector, type SearchableSelectorProps, SelectDropdown, type SelectOption, SelectOptionRow, SelectTrigger, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useDropdown, useEscapeClose, useToast };

@@ -1957,6 +1957,9 @@ export {
   PromptDialog,
   RichTextContent,
   SearchableSelector,
+  SelectDropdown,
+  SelectOptionRow,
+  SelectTrigger,
   Selector,
   SideDrawer,
   StatusCard,
@@ -1965,6 +1968,7 @@ export {
   TourSelector,
   WeightRangeSelector,
   applyPerspectiveWarp,
+  useDropdown,
   useEscapeClose,
   useToast
 };
