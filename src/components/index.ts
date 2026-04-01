@@ -50,3 +50,6 @@ export type { LocationMapProps } from './location-map'
 
 export { RichTextContent } from './rich-text-content'
 export type { RichTextContentProps } from './rich-text-content'
+
+export { PromptDialog } from './prompt-dialog'
+export type { PromptDialogProps } from './prompt-dialog'

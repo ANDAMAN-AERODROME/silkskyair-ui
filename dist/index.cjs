@@ -42,6 +42,7 @@ __export(index_exports, {
   PassportImageEditor: () => PassportImageEditor,
   PaxCounter: () => PaxCounter,
   PillSelector: () => PillSelector,
+  PromptDialog: () => PromptDialog,
   RichTextContent: () => RichTextContent,
   SearchableSelector: () => SearchableSelector,
   Selector: () => Selector,
@@ -1842,6 +1843,151 @@ function RichTextContent({ content, className, fallback }) {
   }
   return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className, children: renderNode(parsed, 0) });
 }
+
+// src/components/prompt-dialog.tsx
+var import_react9 = require("react");
+var import_lucide_react11 = require("lucide-react");
+var import_jsx_runtime19 = require("react/jsx-runtime");
+var VARIANT_CLASSES = {
+  primary: "bg-primary text-white hover:bg-primary/90",
+  danger: "bg-red-600 text-white hover:bg-red-700",
+  amber: "bg-amber-600 text-white hover:bg-amber-700"
+};
+function PromptDialog({
+  open,
+  onSubmit,
+  onCancel,
+  title,
+  description,
+  icon,
+  placeholder = "",
+  submitLabel = "Submit",
+  cancelLabel = "Cancel",
+  variant = "primary",
+  required = false,
+  multiline = true
+}) {
+  const [value, setValue] = (0, import_react9.useState)("");
+  const inputRef = (0, import_react9.useRef)(null);
+  (0, import_react9.useEffect)(() => {
+    if (open) {
+      setValue("");
+      requestAnimationFrame(() => {
+        var _a;
+        return (_a = inputRef.current) == null ? void 0 : _a.focus();
+      });
+    }
+  }, [open]);
+  (0, import_react9.useEffect)(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onCancel();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open, onCancel]);
+  const handleSubmit = (0, import_react9.useCallback)(() => {
+    if (required && !value.trim()) return;
+    onSubmit(value.trim());
+  }, [value, required, onSubmit]);
+  const handleKeyDown = (0, import_react9.useCallback)(
+    (e) => {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleSubmit();
+      }
+      if (!multiline && e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit();
+      }
+    },
+    [handleSubmit, multiline]
+  );
+  if (!open) return null;
+  const isDisabled = required && !value.trim();
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    "div",
+    {
+      className: "fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm",
+      onClick: onCancel,
+      role: "presentation",
+      children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+        "div",
+        {
+          className: "mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl",
+          onClick: (e) => e.stopPropagation(),
+          role: "dialog",
+          "aria-modal": "true",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "mb-4 flex items-center gap-3", children: [
+              icon && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "shrink-0 rounded-full bg-slate-100 p-3 text-slate-600", children: icon }),
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { className: "text-lg font-semibold text-slate-900", children: title }),
+                description && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "text-sm text-slate-500", children: description })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: onCancel,
+                  className: "rounded-full p-1.5 text-slate-400 transition hover:text-slate-600",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react11.X, { className: "h-4 w-4" })
+                }
+              )
+            ] }),
+            multiline ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              "textarea",
+              {
+                ref: inputRef,
+                value,
+                onChange: (e) => setValue(e.target.value),
+                onKeyDown: handleKeyDown,
+                placeholder,
+                rows: 3,
+                className: "mb-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+              }
+            ) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              "input",
+              {
+                ref: inputRef,
+                type: "text",
+                value,
+                onChange: (e) => setValue(e.target.value),
+                onKeyDown: handleKeyDown,
+                placeholder,
+                className: "mb-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex justify-end gap-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: onCancel,
+                  className: "rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-primary hover:text-primary",
+                  children: cancelLabel
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: handleSubmit,
+                  disabled: isDisabled,
+                  className: `rounded-full px-4 py-2 text-sm font-semibold shadow transition disabled:opacity-50 disabled:cursor-not-allowed ${VARIANT_CLASSES[variant]}`,
+                  children: submitLabel
+                }
+              )
+            ] })
+          ]
+        }
+      )
+    }
+  );
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ContactTitleSelect,
@@ -1852,6 +1998,7 @@ function RichTextContent({ content, className, fallback }) {
   PassportImageEditor,
   PaxCounter,
   PillSelector,
+  PromptDialog,
   RichTextContent,
   SearchableSelector,
   Selector,

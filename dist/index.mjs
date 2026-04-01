@@ -1800,6 +1800,151 @@ function RichTextContent({ content, className, fallback }) {
   }
   return /* @__PURE__ */ jsx18("div", { className, children: renderNode(parsed, 0) });
 }
+
+// src/components/prompt-dialog.tsx
+import { useCallback as useCallback5, useEffect as useEffect6, useRef as useRef7, useState as useState8 } from "react";
+import { X as X6 } from "lucide-react";
+import { jsx as jsx19, jsxs as jsxs15 } from "react/jsx-runtime";
+var VARIANT_CLASSES = {
+  primary: "bg-primary text-white hover:bg-primary/90",
+  danger: "bg-red-600 text-white hover:bg-red-700",
+  amber: "bg-amber-600 text-white hover:bg-amber-700"
+};
+function PromptDialog({
+  open,
+  onSubmit,
+  onCancel,
+  title,
+  description,
+  icon,
+  placeholder = "",
+  submitLabel = "Submit",
+  cancelLabel = "Cancel",
+  variant = "primary",
+  required = false,
+  multiline = true
+}) {
+  const [value, setValue] = useState8("");
+  const inputRef = useRef7(null);
+  useEffect6(() => {
+    if (open) {
+      setValue("");
+      requestAnimationFrame(() => {
+        var _a;
+        return (_a = inputRef.current) == null ? void 0 : _a.focus();
+      });
+    }
+  }, [open]);
+  useEffect6(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onCancel();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open, onCancel]);
+  const handleSubmit = useCallback5(() => {
+    if (required && !value.trim()) return;
+    onSubmit(value.trim());
+  }, [value, required, onSubmit]);
+  const handleKeyDown = useCallback5(
+    (e) => {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleSubmit();
+      }
+      if (!multiline && e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit();
+      }
+    },
+    [handleSubmit, multiline]
+  );
+  if (!open) return null;
+  const isDisabled = required && !value.trim();
+  return /* @__PURE__ */ jsx19(
+    "div",
+    {
+      className: "fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm",
+      onClick: onCancel,
+      role: "presentation",
+      children: /* @__PURE__ */ jsxs15(
+        "div",
+        {
+          className: "mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl",
+          onClick: (e) => e.stopPropagation(),
+          role: "dialog",
+          "aria-modal": "true",
+          children: [
+            /* @__PURE__ */ jsxs15("div", { className: "mb-4 flex items-center gap-3", children: [
+              icon && /* @__PURE__ */ jsx19("div", { className: "shrink-0 rounded-full bg-slate-100 p-3 text-slate-600", children: icon }),
+              /* @__PURE__ */ jsxs15("div", { className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ jsx19("h3", { className: "text-lg font-semibold text-slate-900", children: title }),
+                description && /* @__PURE__ */ jsx19("p", { className: "text-sm text-slate-500", children: description })
+              ] }),
+              /* @__PURE__ */ jsx19(
+                "button",
+                {
+                  type: "button",
+                  onClick: onCancel,
+                  className: "rounded-full p-1.5 text-slate-400 transition hover:text-slate-600",
+                  children: /* @__PURE__ */ jsx19(X6, { className: "h-4 w-4" })
+                }
+              )
+            ] }),
+            multiline ? /* @__PURE__ */ jsx19(
+              "textarea",
+              {
+                ref: inputRef,
+                value,
+                onChange: (e) => setValue(e.target.value),
+                onKeyDown: handleKeyDown,
+                placeholder,
+                rows: 3,
+                className: "mb-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+              }
+            ) : /* @__PURE__ */ jsx19(
+              "input",
+              {
+                ref: inputRef,
+                type: "text",
+                value,
+                onChange: (e) => setValue(e.target.value),
+                onKeyDown: handleKeyDown,
+                placeholder,
+                className: "mb-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              }
+            ),
+            /* @__PURE__ */ jsxs15("div", { className: "flex justify-end gap-3", children: [
+              /* @__PURE__ */ jsx19(
+                "button",
+                {
+                  type: "button",
+                  onClick: onCancel,
+                  className: "rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-primary hover:text-primary",
+                  children: cancelLabel
+                }
+              ),
+              /* @__PURE__ */ jsx19(
+                "button",
+                {
+                  type: "button",
+                  onClick: handleSubmit,
+                  disabled: isDisabled,
+                  className: `rounded-full px-4 py-2 text-sm font-semibold shadow transition disabled:opacity-50 disabled:cursor-not-allowed ${VARIANT_CLASSES[variant]}`,
+                  children: submitLabel
+                }
+              )
+            ] })
+          ]
+        }
+      )
+    }
+  );
+}
 export {
   ContactTitleSelect,
   EmailInput,
@@ -1809,6 +1954,7 @@ export {
   PassportImageEditor,
   PaxCounter,
   PillSelector,
+  PromptDialog,
   RichTextContent,
   SearchableSelector,
   Selector,

@@ -365,6 +365,29 @@ interface RichTextContentProps {
  */
 declare function RichTextContent({ content, className, fallback }: RichTextContentProps): react_jsx_runtime.JSX.Element | null;
 
+type PromptDialogProps = {
+    open: boolean;
+    onSubmit: (value: string) => void;
+    onCancel: () => void;
+    title: string;
+    description?: string;
+    /** Icon displayed beside the title */
+    icon?: ReactNode;
+    /** Input placeholder text */
+    placeholder?: string;
+    /** Submit button label (default: "Submit") */
+    submitLabel?: string;
+    /** Cancel button label (default: "Cancel") */
+    cancelLabel?: string;
+    /** Button color variant */
+    variant?: "primary" | "danger" | "amber";
+    /** Whether the text input is required (default: false) */
+    required?: boolean;
+    /** Use textarea instead of single-line input (default: true) */
+    multiline?: boolean;
+};
+declare function PromptDialog({ open, onSubmit, onCancel, title, description, icon, placeholder, submitLabel, cancelLabel, variant, required, multiline, }: PromptDialogProps): react_jsx_runtime.JSX.Element | null;
+
 type Point = {
     x: number;
     y: number;
@@ -373,4 +396,4 @@ declare function applyPerspectiveWarp(source: ImageBitmap, corners: [Point, Poin
 
 declare function useEscapeClose(enabled: boolean, onClose: () => void): void;
 
-export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, RichTextContent, type RichTextContentProps, SearchableSelector, type SearchableSelectorProps, type SelectOption, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useEscapeClose, useToast };
+export { ContactTitleSelect, type ContactTitleSelectProps, EmailInput, type EmailInputProps, type GenderOption, GenderSelector, type GenderSelectorProps, type GenderValue, LocationMap, type LocationMapProps, type NationalityOption, NationalitySelector, type NationalitySelectorProps, PassportImageEditor, type PassportImageEditorProps, PaxCounter, type PaxCounterProps, type PillOption, PillSelector, type Point, PromptDialog, type PromptDialogProps, RichTextContent, type RichTextContentProps, SearchableSelector, type SearchableSelectorProps, type SelectOption, Selector, type SelectorProps, SideDrawer, type SideDrawerProps, StatusCard, type StatusCardProps, type StatusCardVariant, type TitleOption, TitleSelector, type TitleSelectorProps, ToastContainer, type ToastMessage, type ToastType, type TourOption, TourSelector, type TourSelectorProps, type WeightRangeOption, WeightRangeSelector, type WeightRangeSelectorProps, applyPerspectiveWarp, useEscapeClose, useToast };
