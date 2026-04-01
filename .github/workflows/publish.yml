@@ -12,6 +12,7 @@ jobs:
       packages: write
     env:
       BRANCH_NAME: ${{ github.ref_name }}
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -20,6 +21,11 @@ jobs:
           node-version: 20
           registry-url: https://npm.pkg.github.com
           cache: pnpm
+      - name: Set pre-release version for non-main branches
+        if: github.ref_name != 'main'
+        run: |
+          SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
+          node -e "const p=require('./package.json'); p.version+='-$BRANCH_NAME.'+process.argv[1]; require('fs').writeFileSync('package.json',JSON.stringify(p,null,2)+'\n')" "$SHA"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - name: Determine dist-tag
