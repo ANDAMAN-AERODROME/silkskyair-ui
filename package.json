@@ -1,6 +1,6 @@
 {
   "name": "@andaman-aerodrome/silkskyair-ui",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Shared React UI components on Tailwind + Lucide",
   "license": "UNLICENSED",
   "private": false,
