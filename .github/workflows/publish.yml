@@ -21,11 +21,15 @@ jobs:
           node-version: 20
           registry-url: https://npm.pkg.github.com
           cache: pnpm
-      - name: Set pre-release version for non-main branches
-        if: github.ref_name != 'main'
+      - name: Set unique version
         run: |
           SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
-          node -e "const p=require('./package.json'); p.version+='-$BRANCH_NAME.'+process.argv[1]; require('fs').writeFileSync('package.json',JSON.stringify(p,null,2)+'\n')" "$SHA"
+          if [ "$BRANCH_NAME" = "main" ]; then
+            SUFFIX="$SHA"
+          else
+            SUFFIX="$BRANCH_NAME.$SHA"
+          fi
+          node -e "const p=require('./package.json'); p.version+='-'+process.argv[1]; require('fs').writeFileSync('package.json',JSON.stringify(p,null,2)+'\n')" "$SUFFIX"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - name: Determine dist-tag
