@@ -37,7 +37,7 @@ export function SelectTrigger({
     ? "border-red-300 focus-within:border-red-500 focus-within:ring-red-500/30"
     : isOpen
       ? "border-primary ring-2 ring-primary/20"
-      : "border-foreground/15 hover:border-foreground/25";
+      : "border-slate-200 hover:border-slate-300";
 
   return (
     <div
@@ -51,9 +51,9 @@ export function SelectTrigger({
           onClick();
         }
       }}
-      className={`flex w-full cursor-pointer items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm transition ${borderClass} ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
+      className={`flex w-full cursor-pointer items-center gap-2 rounded-[10px] border bg-white px-3 py-2 text-sm transition ${borderClass} ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
     >
-      <div className="flex-1 min-w-0 truncate">{children}</div>
+      <div className="flex-1 min-w-0">{children}</div>
       {showClear && onClear && (
         <button
           type="button"
@@ -80,9 +80,10 @@ type DropdownProps = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  className?: string;
 };
 
-export function SelectDropdown({ isOpen, onClose, children }: DropdownProps) {
+export function SelectDropdown({ isOpen, onClose, children, className }: DropdownProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,7 +105,7 @@ export function SelectDropdown({ isOpen, onClose, children }: DropdownProps) {
       <div className="fixed inset-0 z-10" onClick={onClose} />
       <div
         ref={ref}
-        className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-foreground/10 bg-background shadow-lg"
+        className={`absolute z-20 mt-1 w-full overflow-hidden rounded-[10px] border border-slate-200 bg-white shadow-lg ${className ?? ""}`}
       >
         {children}
       </div>

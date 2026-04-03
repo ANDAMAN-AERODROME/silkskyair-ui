@@ -409,7 +409,7 @@ function SelectTrigger({
   children,
   showClear = false
 }) {
-  const borderClass = error ? "border-red-300 focus-within:border-red-500 focus-within:ring-red-500/30" : isOpen ? "border-primary ring-2 ring-primary/20" : "border-foreground/15 hover:border-foreground/25";
+  const borderClass = error ? "border-red-300 focus-within:border-red-500 focus-within:ring-red-500/30" : isOpen ? "border-primary ring-2 ring-primary/20" : "border-foreground/10 hover:border-foreground/20";
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
     "div",
     {
@@ -423,7 +423,7 @@ function SelectTrigger({
           onClick();
         }
       },
-      className: `flex w-full cursor-pointer items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm transition ${borderClass} ${disabled ? "cursor-not-allowed opacity-60" : ""}`,
+      className: `flex w-full cursor-pointer items-center gap-2 rounded-lg border bg-background px-3.5 py-2.5 text-sm transition ${borderClass} ${disabled ? "cursor-not-allowed opacity-60" : ""}`,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex-1 min-w-0 truncate", children }),
         showClear && onClear && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
