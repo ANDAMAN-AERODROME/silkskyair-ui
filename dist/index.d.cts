@@ -144,8 +144,9 @@ type DropdownProps = {
     isOpen: boolean;
     onClose: () => void;
     children: ReactNode;
+    className?: string;
 };
-declare function SelectDropdown({ isOpen, onClose, children }: DropdownProps): react_jsx_runtime.JSX.Element | null;
+declare function SelectDropdown({ isOpen, onClose, children, className }: DropdownProps): react_jsx_runtime.JSX.Element | null;
 type OptionRowProps<T extends string = string> = {
     option: SelectOption<T>;
     isSelected: boolean;
