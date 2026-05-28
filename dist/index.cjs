@@ -1616,24 +1616,35 @@ function PaxCounter({
   onChange,
   disabled = false
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { "data-pax-counter": label, children: [
     /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-xs font-medium text-foreground/60", children: label }),
     /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-1 flex items-center gap-3", children: [
       /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         "button",
         {
           type: "button",
+          "data-action": "pax-counter-decrement",
+          "aria-label": `Decrement ${label}`,
           disabled: disabled || value <= min,
           onClick: () => onChange(value - 1),
           className: "flex h-10 w-10 items-center justify-center rounded-lg border-2 border-foreground/15 bg-background text-foreground/50 transition hover:border-primary hover:text-primary disabled:opacity-40",
           children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react9.Minus, { className: "h-4 w-4" })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "flex min-w-[60px] flex-col items-center justify-center rounded-lg border border-foreground/10 bg-foreground/2 px-4 py-2", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-xl font-bold text-foreground", children: value }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        "div",
+        {
+          "data-pax-counter-value": value,
+          className: "flex min-w-[60px] flex-col items-center justify-center rounded-lg border border-foreground/10 bg-foreground/2 px-4 py-2",
+          children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-xl font-bold text-foreground", children: value })
+        }
+      ),
       /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         "button",
         {
           type: "button",
+          "data-action": "pax-counter-increment",
+          "aria-label": `Increment ${label}`,
           disabled: disabled || value >= max,
           onClick: () => onChange(value + 1),
           className: "flex h-10 w-10 items-center justify-center rounded-lg border-2 border-foreground/15 bg-background text-foreground/50 transition hover:border-primary hover:text-primary disabled:opacity-40",
