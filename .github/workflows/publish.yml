@@ -18,9 +18,9 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
+          package-manager-cache: false
           node-version: 20
           registry-url: https://npm.pkg.github.com
-          cache: pnpm
       - name: Set unique version
         run: |
           SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
